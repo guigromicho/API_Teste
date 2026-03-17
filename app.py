@@ -18,6 +18,8 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
+    email = db.Column(db.String(200), unique=True, nullable=False)
+    phone = db.Column(db.String(20), nullable=False)
 
 # Create tables
 with app.app_context():
@@ -27,8 +29,8 @@ with app.app_context():
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.json
-    if not data or 'username' not in data or 'password' not in data:
-        return jsonify({'message': 'Username and password required'}), 400
+    if not data or 'username' not in data or 'password' not in data or 'email' not in data or 'phone' not in data:
+        return jsonify({'message': 'All fields required'}), 400
 
     if User.query.filter_by(username=data['username']).first():
         return jsonify({'message': 'Username already exists'}), 400
