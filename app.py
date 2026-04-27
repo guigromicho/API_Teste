@@ -36,7 +36,12 @@ def signup():
         return jsonify({'message': 'Username already exists'}), 400
 
     hashed_pw = bcrypt.generate_password_hash(data['password']).decode('utf-8')
-    new_user = User(username=data['username'], password=hashed_pw)
+    new_user = User(
+        username=data['username'],
+        password=hashed_pw,
+        email=data['email'],
+        phone=data['phone']
+    )
     db.session.add(new_user)
     db.session.commit()
     return jsonify({'message': 'User created successfully'}), 201
