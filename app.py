@@ -104,5 +104,9 @@ def delete_user():
     except jwt.InvalidTokenError:
         return jsonify({'message': 'Invalid token'}), 401
 
+@app.route("/ping")
+def ping():
+    return {"status": "alive"}
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
